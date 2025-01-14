@@ -1,0 +1,79 @@
+﻿@model StudentJournal.Models.Student
+
+@{
+    ViewData["Title"] = "Student data editing";
+    ViewData["HideNameFields"] = false;
+}
+
+<h2>Student data editing</h2>
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "updateStudentForm" }))
+{
+    @Html.Partial("_StudentForm", Model)
+    <div id="exam-score">
+        <h4>Exam score: <span id="calculatedExamScore">@Model.Exam_Score</span></h4>
+    </div>
+    <button type="submit" class="btn btn-success mt-3">Update</button>
+    <a asp-controller="Student" asp-action="StudentsView" class="btn btn-secondary mt-3">Back to full list</a>
+}
+
+
+<div id="successModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editing data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage">The data has been successfully updated!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">ОК</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+        $(document).ready(function () {
+        $("#updateStudentForm").on("submit", function (event) {
+            event.preventDefault();
+
+            var formData = $(this).serialize();
+            $.ajax({
+                url: "@Url.Action("UpdateStudentAjax", "Student")",
+                type: "POST",
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        $("#calculatedExamScore").text(response.examScore);
+
+                        $("#modalMessage").text("Data has been successfully updated! New Score: " + response.examScore);
+
+                        $("#successModal").modal("show");
+                    } else {
+                        alert("Error: " + response.message);
+                    }
+                },
+                error: function () {
+                    alert("There was an error in sending the data.");
+                }
+            });
+        });
+
+        $("#successModal").on("hidden.bs.modal", function () {
+            location.reload(); 
+        });
+
+        $(".modal-footer .btn-primary, .modal-header .close").on("click", function () {
+            $("#successModal").modal("hide");
+            location.reload(); 
+        });
+    });
+</script>

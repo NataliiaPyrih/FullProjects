@@ -1,0 +1,22 @@
+[
+  {
+    "Username": "studentLeader",
+    "Password": "st123",
+    "Role": "StudentLeader"
+  },
+  {
+    "Username": "curator",
+    "Password": "c123",
+    "Role": "Curator"
+  },
+  {
+    "Username": "admin",
+    "Password": "admin",
+    "Role": "Curator"
+  },
+  {
+    "Username": "student",
+    "Password": "123",
+    "Role": "StudentLeader"
+  }
+]

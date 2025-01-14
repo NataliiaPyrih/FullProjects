@@ -1,0 +1,48 @@
+﻿@model IEnumerable<StudentJournal.Models.Student>
+
+@{
+    ViewData["Title"] = "List of students";
+}
+
+<h4 class="display-4">List of students</h4>
+@Html.Partial("_StudentTable", Model)
+
+    <p>
+        <a asp-controller="Student" asp-action="Add" class="btn btn-primary">Add new student</a>
+    </p>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+     $(document).ready(function () {
+        let studentIdToDelete = null;
+           $(document).on("click", ".delete-button", function () {
+        studentIdToDelete = $(this).data("id");
+        const studentName = $(this).data("name");
+        $("#studentName").text(studentName);
+    });
+
+            $("#confirmDeleteButton").on("click", function () {
+        if (studentIdToDelete) {
+
+            $.ajax({
+                url: "/Student/DeleteStudentAjax",
+                type: "POST",
+                data: { id: studentIdToDelete },
+                success: function (response) {
+
+                    if (response.success) {
+                        $("#deleteModal").modal("hide");
+                        location.reload();
+                    } else {
+                        alert("Deletion Error: " + response.message);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("An error occurred when deleting a student.");
+                }
+            });
+        }
+    });
+    });
+</script>

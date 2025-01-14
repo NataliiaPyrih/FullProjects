@@ -1,0 +1,115 @@
+﻿@model StudentJournal.Models.Student
+
+@Html.HiddenFor(model => model.Id)
+@if (!(bool)ViewData["HideNameFields"])
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName)
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName)
+        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+    </div>
+}
+
+<div class="form-group">
+    <label asp-for="Hours_Studied">Hours Studied</label>
+    <input asp-for="Hours_Studied" class="form-control" type="number" min="0" />
+    <span asp-validation-for="Hours_Studied" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Attendance">Attendance (%)</label>
+    <input asp-for="Attendance" class="form-control" type="number" min="0" />
+    <span asp-validation-for="Hours_Studied" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Parental_Involvement">Parental Involvement</label>
+    <select asp-for="Parental_Involvement" asp-items="Html.GetEnumSelectList<CategoryLevel>()" class="form-control"></select>
+</div>
+<div class="form-group">
+    <label asp-for="Access_to_Resources">Access to Resources</label>
+    <select asp-for="Access_to_Resources" asp-items="Html.GetEnumSelectList<CategoryLevel>()" class="form-control"></select>
+</div>
+<div class="form-group">
+    <label asp-for="Extracurricular_Activities">Extracurricular Activities</label>
+    <select asp-for="Extracurricular_Activities" asp-items="Html.GetEnumSelectList<ChooseValue>()" class="form-control"></select>
+</div>
+<div class="form-group">
+    <label asp-for="Sleep_Hours">Sleep Hours</label>
+    <input asp-for="Sleep_Hours" class="form-control" type="number" min="0" />
+    <span asp-validation-for="Hours_Studied" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Previous_Scores">Previous Scores</label>
+    <input asp-for="Previous_Scores" class="form-control" type="number" min="0" />
+    <span asp-validation-for="Hours_Studied" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Motivation_Level">Motivation Level</label>
+    <select asp-for="Motivation_Level" asp-items="Html.GetEnumSelectList<CategoryLevel>()" class="form-control"></select>
+</div>
+<div class="form-group">
+    <label asp-for="Internet_Access">Internet Access</label>
+    <select asp-for="Internet_Access" asp-items="Html.GetEnumSelectList<ChooseValue>()" class="form-control"></select>
+</div>
+<div class="form-group">
+    <label asp-for="Tutoring_Sessions">Tutoring Sessions</label>
+    <input asp-for="Tutoring_Sessions" class="form-control" type="number" min="0" />
+    <span asp-validation-for="Hours_Studied" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Family_Income">Family Income</label>
+    <select asp-for="Family_Income" asp-items="Html.GetEnumSelectList<CategoryLevel>()" class="form-control"></select>
+</div>
+<div class="form-group">
+    <label asp-for="Teacher_Quality">Teacher Quality</label>
+    <select asp-for="Teacher_Quality" asp-items="Html.GetEnumSelectList<CategoryLevel>()" class="form-control"></select>
+</div>
+
+<div class="form-group">
+    <label asp-for="School_Type">School Type</label>
+    <select asp-for="School_Type" asp-items="Html.GetEnumSelectList<SchoolType>()" class="form-control"></select>
+</div>
+<div class="form-group">
+    <label asp-for="Peer_Influence">Peer Influence</label>
+    <select asp-for="Peer_Influence" asp-items="Html.GetEnumSelectList<PeerInfluence>()" class="form-control"></select>
+</div>
+<div class="form-group">
+    <label asp-for="Physical_Activity">Physical Activity</label>
+    <input asp-for="Physical_Activity" class="form-control" type="number" min="0" />
+    <span asp-validation-for="Hours_Studied" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Learning_Disabilities">Learning Disabilities</label>
+    <select asp-for="Learning_Disabilities" asp-items="Html.GetEnumSelectList<ChooseValue>()" class="form-control"></select>
+</div>
+
+<div class="form-group">
+    <label asp-for="Parental_Education_Level">Parental Education Level</label>
+    <select asp-for="Parental_Education_Level" asp-items="Html.GetEnumSelectList< ParenteducationLevel>()" class="form-control"></select>
+</div>
+
+<div class="form-group">
+    <label asp-for="Distance_from_Home">Distance from Home</label>
+    <select asp-for="Distance_from_Home" asp-items="Html.GetEnumSelectList< Distance_from_Home>()" class="form-control"></select>
+</div>
+
+
+<div class="form-group">
+    <label>Gender</label>
+    @foreach (var gender in Enum.GetValues(typeof(StudentJournal.Models.Gender)))
+    {
+        <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   name="Gender"
+                   value="@gender"
+                   id="gender-@gender"
+            @(Model != null && Model.Gender == (StudentJournal.Models.Gender)gender ? "checked" : "") />
+            <label class="form-check-label" for="gender-@gender">@gender</label>
+        </div>
+    }
+</div>

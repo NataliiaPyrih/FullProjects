@@ -1,0 +1,14 @@
+﻿@model StudentJournal.Models.Student
+
+@{
+    ViewData["Title"] = "Add new student";
+    ViewData["HideNameFields"] = false;
+}
+
+<h2>Add new student</h2>
+
+@using (Html.BeginForm("Add", "Student", FormMethod.Post))
+{
+    @Html.Partial("_StudentForm", Model)
+    <button type="submit" class="btn btn-success mt-3">Add</button>
+}

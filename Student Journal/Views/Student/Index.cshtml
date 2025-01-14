@@ -1,0 +1,79 @@
+﻿@model StudentJournal.Models.Student
+
+@{
+    ViewData["Title"] = "Main Page";
+    ViewData["HideNameFields"] = true;
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Nure-brand-book-1-1024_cr2.jpg" alt="Photo of the main building of the university" class="img-fluid rounded" />
+        </div>
+
+        <div class="col-md-8">
+            <h2>Student Exam Score Calculator</h2>
+            <form id="calculateScoreForm" method="post">
+                @Html.Partial("_StudentForm", Model)
+                <button type="submit" class="btn btn-primary mt-3">Calculate</button>
+            </form>
+            
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert @TempData["AlertClass"] mt-3" role="alert">
+                    @TempData["Message"]
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resultModalLabel">Calculation result</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="resultMessage">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+               $(document).ready(function () {
+            $("#calculateScoreForm").on("submit", function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: '@Url.Action("CalculateScoreAjax", "Student")',
+                    type: "POST",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $("#resultMessage").text(response.message);
+
+                        if (response.isSuccess) {
+                            $("#resultModal .modal-content")
+                                .removeClass("border-danger")
+                                .addClass("border-success");
+                        } else {
+                            $("#resultModal .modal-content")
+                                .removeClass("border-success")
+                                .addClass("border-danger");
+                        }
+
+                        $("#resultModal").modal("show");
+                    },
+                    error: function () {
+                        alert("There was an error in the calculation of the score.");
+                    }
+                });
+            });
+        });
+    </script>
+}

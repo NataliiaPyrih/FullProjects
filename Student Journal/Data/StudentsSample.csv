@@ -1,0 +1,22 @@
+Id,FirstName,LastName,Hours_Studied,Attendance,Parental_Involvement,Access_to_Resources,Extracurricular_Activities,Sleep_Hours,Previous_Scores,Motivation_Level,Internet_Access,Tutoring_Sessions,Family_Income,Teacher_Quality,School_Type,Peer_Influence,Physical_Activity,Learning_Disabilities,Parental_Education_Level,Distance_from_Home,Gender,Exam_Score
+2,Ernest,Mills,32,81,Low,Low,No,11,65,Low,No,4,Low,Low,Public,Negative,0,No,HighSchool,Moderate,Male,63.29114
+3,Miles,Carson,20,76,Low,Low,No,7,67,Low,Yes,2,Low,Medium,Public,Negative,12,No,HighSchool,Moderate,Male,61.48184
+4,Student4,Last4,31,82,Low,Low,No,4,90,Low,No,4,Low,Low,Public,Negative,0,No,HighSchool,Moderate,Male,67.80365
+5,Jonathan,Morton,26,60,Low,Low,No,5,65,Low,No,5,Low,Low,Public,Negative,0,No,HighSchool,Moderate,Male,49.996952
+6,Student6,Last6,36,77,Low,Low,No,6,65,Low,No,2,Low,Low,Public,Negative,1,No,HighSchool,Moderate,Male,0
+7,Student7,Last7,29,94,Low,Low,No,7,86,Low,No,3,Low,Low,Public,Negative,6,No,HighSchool,Moderate,Male,0
+8,Student8,Last8,19,60,Low,Low,No,7,63,Low,No,7,Low,Low,Public,Negative,4,No,HighSchool,Moderate,Male,0
+9,Student9,Last9,15,80,Low,Low,No,4,64,Low,No,0,Low,Low,Public,Negative,5,No,HighSchool,Moderate,Male,0
+10,Student10,Last10,39,93,Low,Low,No,4,54,Low,No,1,Low,Low,Public,Negative,2,No,HighSchool,Moderate,Male,0
+11,Student11,Last11,30,90,Low,Low,No,11,62,Low,No,3,Low,Low,Public,Negative,5,No,HighSchool,Moderate,Male,0
+12,Student12,Last12,35,99,Low,Low,No,8,75,Low,No,2,Low,Low,Public,Negative,5,No,HighSchool,Moderate,Male,0
+13,Student13,Last13,30,97,Low,Low,No,6,88,Low,No,3,Low,Low,Public,Negative,4,No,HighSchool,Moderate,Male,0
+14,Student14,Last14,34,54,Low,Low,No,8,93,Low,No,3,Low,Low,Public,Negative,3,No,HighSchool,Moderate,Male,0
+15,Student15,Last15,24,94,Low,Low,No,7,50,Low,No,1,Low,Low,Public,Negative,6,No,HighSchool,Moderate,Male,0
+16,Student16,Last16,12,79,Low,Low,No,11,83,Low,No,6,Low,Low,Public,Negative,0,No,HighSchool,Moderate,Male,0
+17,Student17,Last17,26,75,Low,Low,No,10,92,Low,No,4,Low,Low,Public,Negative,3,No,HighSchool,Moderate,Male,0
+18,Student18,Last18,31,77,Low,Low,No,9,66,Low,No,2,Low,Low,Public,Negative,6,No,HighSchool,Moderate,Male,0
+19,Student19,Last19,39,66,Low,Low,No,11,77,Low,No,3,Low,Low,Public,Negative,5,No,HighSchool,Moderate,Male,0
+20,Student20,Last20,28,54,Low,Low,No,7,93,Low,No,3,Low,Low,Public,Negative,0,No,HighSchool,Moderate,Male,59.56401
+21,Larry,Post,20,95,Medium,High,No,8,85,Medium,Yes,3,Medium,Medium,Public,Positive,0,No,Postgraduate,Near,Male,75.506874
+22,Frankie," Haney",30,95,High,High,Yes,5,97,High,Yes,6,High,High,Private,Positive,0,No,Postgraduate,Near,Female,89.146805
