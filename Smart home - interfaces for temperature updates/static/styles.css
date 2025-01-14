@@ -1,0 +1,103 @@
+body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color:#f3f3f3;
+}
+
+h1{
+    text-align: center;
+}
+
+.plan {
+    position: relative;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.plan img {
+    display: none;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
+}
+
+.plan-preview {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    cursor: pointer;
+}
+
+.preview-text {
+    margin: 0;
+    padding: 10px;
+}
+
+.plan-preview:hover {
+    color: blue;
+}
+
+.plan-preview img {
+    max-width: 100%;
+    height: auto;
+}
+
+.room {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+}
+
+.room h2 {
+     text-align: center;
+     margin-top: 0;
+}
+
+.room p {
+     margin: 5px 0;
+}
+
+table{
+    width:100%;
+}
+.button {
+     display: inline-block;
+     padding: 8px 16px;
+     font-size: 16px;
+     background-color: #1a87b8;
+     border: none;
+     color: white;
+     cursor: pointer;
+     border-radius: 4px;
+     text-decoration: none;
+}
+
+.button:hover {
+     background-color: #20ced8;
+}
+.button-container {
+     position: relative;
+}
+
+#submit_button {
+       position: relative;
+       top: -50px;
+}
+
+input[type="range"] {
+  -webkit-appearance: slider-vertical;
+}
+
+.chart-container{
+    position: relative;
+    left: 30%;
+    width:690px;
+    height:400px;
+}

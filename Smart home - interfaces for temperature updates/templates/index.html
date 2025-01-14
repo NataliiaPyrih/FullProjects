@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Пиріг Н. Я.</title>
+</head>
+<body>
+    <h1>Практичная робота 5</h1>
+    <div class="plan">
+        <div class="plan-preview">
+            <p class="preview-text">Home plan</p>
+        </div>
+        <img src="{{ url_for('static', filename='plan.jpg') }}" alt="Home plan">
+    </div>
+
+    <div class="room">
+        <h2>A room with heating system </h2>
+        <table>
+        <tr>
+            <td>
+                <p id="lower_value">Lower threshold value: {{ N1 }}</p>
+                <p id="upper_value">Upper threshold value: {{ N2 }}</p>
+            </td>
+            <td>
+                <p>Heating system for bedroom 2: <span id="heating_room1">{{ "On" if heating_states['room1'] else "Off" }}</span></p>
+                <p>Heating system for bedroom 3: <span id="heating_room2">{{ "On" if heating_states['room2'] else "Off" }}</span></p>
+            </td>
+        </tr>
+        </table>
+        <form action="/update_thresholds" method="POST">
+        <label for="N1">Upper threshold:</label>
+        <input type="number" step="any" min="0" max="100" name="N1" id="N1" value="{{ N1 }}" >
+            <br><br>
+        <label for="N2">Upper threshold:</label>
+        <input type="number" step="any" min="0" max="100" id="N2" name="N2" value="{{ N2 }}">
+            <br><br>
+        <input type="submit" class="button" value="Update Thresholds">
+</form>
+    </div>
+    <div class="room">
+        <h2>Bedroom 2</h2>
+        <p>Light: <span id="light_room1">{{ "On" if light_states['room1'] else "Off" }}</span></p>
+        <p>Temperature: <span id="temperature_room1">{{ temperature['room1']}}</span> &deg;C</p>
+        <a href="/light/room1" class="button">Toggle light</a>
+    </div>
+
+    <div class="room">
+        <h2>Bedroom 3</h2>
+        <p>Light: <span id="light_room2">{{ "On" if light_states['room2'] else "Off" }}</span></p>
+        <p>Temperature: <span id="temperature_room2">{{ temperature['room2'] }}</span> &deg;C</p>
+        <a href="/light/room2" class="button">Toggle light</a>
+    </div>
+
+    <div class="room">
+        <h2>Study room</h2>
+        <form action="/brightness" method="POST">
+        <input type="range" min="0" max="100" value="{{ brightness }}" name="brightness" list="tickmarks">
+        <datalist id="tickmarks">
+        <option value="0">
+        <option value="10">
+        <option value="20">
+        <option value="30">
+        <option value="40">
+        <option value="50">
+        <option value="60">
+        <option value="70">
+        <option value="80">
+        <option value="90">
+        <option value="100">
+        </datalist>
+        <span class="button-container">
+            <button type="submit" class="button" id="submit_button">Update Brightness</button>
+        </span>
+        </form>
+        <p>Brightness value: {{ brightness }} %</p>
+
+    </div>
+    <div class="chart-container">
+    <canvas id="temperatureChart"></canvas>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+        var planPreview = document.querySelector('.plan-preview');
+        var planImage = document.querySelector('.plan img');
+
+    planPreview.addEventListener('click', function() {
+        planImage.style.display = 'block';
+        planPreview.style.display = 'none';
+    });
+
+    planImage.addEventListener('click', function() {
+        planImage.style.display = 'none';
+        planPreview.style.display = 'block';
+    });
+
+    function updateHeatingState() {
+         $.get('/heating', function(data) {
+             $('#heating_room1').text(data.room1 ? "On" : "Off");
+             $('#heating_room2').text(data.room2 ? "On" : "Off");
+        });
+   }
+
+    function updateTemperature() {
+        $.get('/temperature', function(data) {
+            $('#temperature_room1').text(data.room1[data.room1.length - 1]['temperature']);
+            $('#temperature_room2').text(data.room2[data.room2.length - 1]['temperature']);
+        });
+    }
+
+    function updateThresholds() {
+        $.ajax({
+            url: '/get_thresholds',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                $('#lower_value').text("Lower threshold value: " + data.N1);
+                $('#upper_value').text("Upper threshold value: " + data.N2);
+            }
+        });
+    }
+
+    function updateTemperatureChart() {
+    $.get('/temperature', function(data) {
+        var room1_temp = data.room1.map(item => ({ x: item.time, y: item.temperature }));
+        var room2_temp = data.room2.map(item => ({ x: item.time, y: item.temperature }));
+
+        var ctx = document.getElementById('temperatureChart').getContext('2d');
+
+        if (window.temperatureChart instanceof Chart) {
+            window.temperatureChart.destroy();
+        }
+
+        window.temperatureChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Temperature in bedroom 2',
+                    data: room1_temp,
+                    backgroundColor: '#f47467',
+                    borderColor: '#f47467',
+                    borderWidth: 1
+                }, {
+                    label: 'Temperature in bedroom 3',
+                    data: room2_temp,
+                    backgroundColor: '#81344c',
+                    borderColor: '#81344c',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        time: {
+                            parser: 'YYYY-MM-DD HH:mm:ss',
+                            unit: 'minute',
+                            displayFormats: {
+                                minute: 'HH:mm'
+                            }
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        });
+    }
+
+    updateTemperature();
+    updateHeatingState();
+    updateTemperatureChart();
+    updateThresholds();
+
+    setInterval(updateTemperature, 3700);
+    setInterval(updateHeatingState, 3700);
+    setInterval(updateTemperatureChart, 3700);
+    setInterval(updateThresholds, 5000);
+
+});
+    </script>
+</body>
+</html>
